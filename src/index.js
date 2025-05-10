@@ -103,9 +103,6 @@ const initializeDb = async () => {
 // Initialize database and start server
 const startServer = async () => {
   try {
-    // Add SSL configuration for Neon database
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    
     const isConnected = await testConnection();
     if (!isConnected) {
       process.exit(1);
