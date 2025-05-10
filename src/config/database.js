@@ -1,11 +1,14 @@
 import { Sequelize } from 'sequelize';
-import 'dotenv/config'; // Ensure this line is present and correctly loads the .env file
+import 'dotenv/config'; // Ensure this line is present to load .env in local development
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL environment variable is not defined');
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+  console.error('❌ DATABASE_URL environment variable is not defined.');
+  throw new Error('DATABASE_URL environment variable is required but not set.');
 }
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
+const sequelize = new Sequelize(databaseUrl, {
   dialect: 'postgres',
   dialectOptions: {
     ssl: {
