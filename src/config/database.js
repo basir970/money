@@ -1,7 +1,9 @@
 import { Sequelize } from 'sequelize';
-import 'dotenv/config'; // Ensure this line is present to load .env in local development
+import 'dotenv/config';
 
 const databaseUrl = process.env.DATABASE_URL;
+
+console.log(`DATABASE_URL: ${databaseUrl || 'Not Defined'}`);
 
 if (!databaseUrl) {
   console.error('❌ DATABASE_URL environment variable is not defined.');
@@ -27,6 +29,8 @@ const sequelize = new Sequelize(databaseUrl, {
 
 export const testConnection = async () => {
   try {
+    console.log('Testing database connection...');
+    console.log(`DATABASE_URL: ${process.env.DATABASE_URL}`);
     await sequelize.authenticate();
     console.log('✅ Database connection established successfully.');
     return true;
