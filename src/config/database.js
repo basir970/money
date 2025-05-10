@@ -1,9 +1,9 @@
 import { Sequelize } from 'sequelize';
-import 'dotenv/config';
+import 'dotenv/config'; // Ensure this line is present to load .env in local development
+
+console.log(`Loading DATABASE_URL: ${process.env.DATABASE_URL || 'Not Defined'}`);
 
 const databaseUrl = process.env.DATABASE_URL;
-
-console.log(`DATABASE_URL: ${databaseUrl || 'Not Defined'}`);
 
 if (!databaseUrl) {
   console.error('❌ DATABASE_URL environment variable is not defined.');
@@ -13,10 +13,7 @@ if (!databaseUrl) {
 const sequelize = new Sequelize(databaseUrl, {
   dialect: 'postgres',
   dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
+    ssl: process.env.NODE_ENV === 'production' ? { require: true, rejectUnauthorized: false } : false
   },
   pool: {
     max: 5,
